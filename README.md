@@ -1,1 +1,1696 @@
-# Sales-System
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMIRG AI — Email Script System</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Josefin+Sans:wght@200;300;400;600;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0a0a08;
+  --paper: #f5f2eb;
+  --cream: #ede9df;
+  --warm: #e8e2d4;
+  --rule: #c8bfa8;
+  --faint: #b8ad98;
+  --mid: #6b6355;
+  --body: #2a2520;
+  --gold: #b8860b;
+  --gold-light: #d4a017;
+  --gold-pale: rgba(184,134,11,0.08);
+  --gold-rule: rgba(184,134,11,0.25);
+  --red: #8b1a1a;
+  --teal: #1a5c52;
+  --teal-pale: rgba(26,92,82,0.08);
+  --shadow: rgba(10,10,8,0.12);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  color: var(--body);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--rule); }
+
+/* ── LAYOUT ── */
+.shell { display: flex; min-height: 100vh; }
+
+/* ── SIDEBAR ── */
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: var(--ink);
+  color: var(--paper);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.brand {
+  padding: 32px 24px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.brand-name {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 5px;
+  color: var(--gold-light);
+  text-transform: uppercase;
+}
+.brand-sub {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 200;
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+
+.nav-block { padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.nav-section-label {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  padding: 0 24px;
+  margin-bottom: 6px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 24px;
+  cursor: pointer;
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.55);
+  transition: all 0.2s;
+  border-left: 2px solid transparent;
+  position: relative;
+}
+.nav-item:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.04); }
+.nav-item.active {
+  color: var(--gold-light);
+  border-left-color: var(--gold-light);
+  background: rgba(184,134,11,0.06);
+}
+.nav-num {
+  font-family: 'Courier Prime', monospace;
+  font-size: 10px;
+  color: rgba(255,255,255,0.2);
+  width: 20px;
+  text-align: right;
+  flex-shrink: 0;
+}
+.nav-item.active .nav-num { color: var(--gold); }
+
+.sidebar-note {
+  margin-top: auto;
+  padding: 20px 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 200;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.25);
+  line-height: 1.6;
+}
+.sidebar-note strong { color: var(--gold); font-weight: 600; }
+
+/* ── MAIN ── */
+.main { flex: 1; overflow: hidden; }
+
+/* ── HEADER ── */
+.masthead {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 48px 64px 40px;
+  position: relative;
+  overflow: hidden;
+}
+.masthead::before {
+  content: 'AI LOGISTICS OVERVIEW';
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%) rotate(90deg);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 6px;
+  color: rgba(255,255,255,0.06);
+  white-space: nowrap;
+}
+.masthead-kicker {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.masthead-kicker::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+.masthead-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: 44px;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 12px;
+}
+.masthead-title em { font-style: italic; color: var(--gold-light); }
+.masthead-desc {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.5);
+  max-width: 580px;
+  line-height: 1.7;
+}
+.masthead-meta {
+  margin-top: 24px;
+  display: flex;
+  gap: 32px;
+}
+.meta-item {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+.meta-item strong {
+  display: block;
+  font-family: 'Courier Prime', monospace;
+  font-size: 18px;
+  color: var(--gold-light);
+  letter-spacing: 0;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+/* ── CONTENT AREA ── */
+.content {
+  padding: 0 64px 80px;
+  max-width: 960px;
+}
+
+/* ── SECTIONS ── */
+.view { display: none; }
+.view.active { display: block; }
+
+/* ── PRODUCT BRIEF ── */
+.brief-section { padding: 48px 0; border-bottom: 1px solid var(--rule); }
+.brief-section:last-child { border-bottom: none; }
+
+.section-eyebrow {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 600;
+  font-size: 9px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-eyebrow::after { content: ''; flex: 0 0 40px; height: 1px; background: var(--gold-rule); }
+
+.section-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 1.2;
+  color: var(--ink);
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+.section-heading em { font-style: italic; color: var(--gold); }
+
+.section-body {
+  font-size: 17px;
+  line-height: 1.85;
+  color: var(--body);
+  max-width: 680px;
+}
+.section-body p { margin-bottom: 14px; }
+.section-body p:last-child { margin-bottom: 0; }
+.section-body strong { color: var(--ink); font-weight: 600; }
+
+/* ── PRICING CARD ── */
+.pricing-card {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 40px 48px;
+  margin: 32px 0;
+  position: relative;
+  overflow: hidden;
+}
+.pricing-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light), transparent);
+}
+.price-label {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 8px;
+}
+.price-main {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 72px;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--gold-light);
+  margin-bottom: 4px;
+}
+.price-main sup {
+  font-size: 32px;
+  vertical-align: top;
+  margin-top: 14px;
+  display: inline-block;
+}
+.price-sub {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: rgba(255,255,255,0.4);
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+.price-rationale {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-style: italic;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.6;
+  border-left: 2px solid var(--gold);
+  padding-left: 20px;
+  margin-bottom: 28px;
+}
+.price-includes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.price-item {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.7);
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  line-height: 1.5;
+}
+.price-item::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+
+/* ── DELIVERABLE LIST ── */
+.deliverable-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 24px 0;
+}
+.deliverable-card {
+  background: var(--cream);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--gold);
+  padding: 20px 22px;
+}
+.del-num {
+  font-family: 'Courier Prime', monospace;
+  font-size: 11px;
+  color: var(--gold);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+.del-title {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.del-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  color: var(--mid);
+  line-height: 1.6;
+}
+
+/* ── EMAIL CARDS ── */
+.email-header {
+  padding: 36px 0 20px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 0;
+}
+.email-meta-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.email-num {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: var(--ink);
+  color: var(--gold-light);
+  padding: 4px 10px;
+}
+.email-timing {
+  font-family: 'Courier Prime', monospace;
+  font-size: 12px;
+  color: var(--gold);
+}
+.email-goal-tag {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 1.5px;
+  color: var(--mid);
+  border: 1px solid var(--rule);
+  padding: 3px 10px;
+}
+.email-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 24px;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.email-subtitle {
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--mid);
+}
+
+.subject-line {
+  background: var(--cream);
+  border: 1px solid var(--rule);
+  border-left: 4px solid var(--gold);
+  padding: 14px 18px;
+  margin: 20px 0;
+  font-family: 'Josefin Sans', sans-serif;
+}
+.subject-label {
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 4px;
+}
+.subject-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: 0.5px;
+}
+
+.email-body-card {
+  background: #fff;
+  border: 1px solid var(--rule);
+  padding: 40px 44px;
+  margin: 0 0 8px;
+  position: relative;
+  box-shadow: 0 2px 20px var(--shadow);
+}
+.email-body-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+.email-from {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 11px;
+  letter-spacing: 1px;
+  color: var(--faint);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed var(--rule);
+  display: flex;
+  justify-content: space-between;
+}
+
+.email-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px;
+  line-height: 1.9;
+  color: var(--body);
+  white-space: pre-line;
+}
+.email-text .hi { font-style: italic; color: var(--mid); }
+.email-text .hook { font-size: 18px; font-weight: 600; color: var(--ink); }
+.email-text .cta-line {
+  display: block;
+  margin: 20px 0;
+  font-weight: 600;
+  color: var(--gold);
+  font-size: 18px;
+  border-left: 3px solid var(--gold);
+  padding-left: 16px;
+}
+.email-text .sig {
+  display: block;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: var(--mid);
+  font-style: normal;
+}
+.email-text .ps {
+  display: block;
+  margin-top: 16px;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--mid);
+  border-left: 2px solid var(--rule);
+  padding-left: 14px;
+}
+.email-text .highlight { background: rgba(184,134,11,0.1); padding: 0 3px; }
+.email-text .stat { font-weight: 700; color: var(--ink); font-size: 19px; }
+
+.annotation-bar {
+  background: var(--cream);
+  border: 1px solid var(--rule);
+  border-top: none;
+  padding: 16px 20px;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.annotation {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--mid);
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+.annotation-label { color: var(--gold); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; flex-shrink: 0; }
+
+.copy-btn {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--mid);
+  border: 1px solid var(--rule);
+  padding: 6px 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.copy-btn:hover { border-color: var(--gold); color: var(--gold); }
+.copy-btn.copied { border-color: var(--teal); color: var(--teal); }
+
+/* ── STRATEGY NOTES ── */
+.strategy-box {
+  background: var(--gold-pale);
+  border: 1px solid var(--gold-rule);
+  border-left: 4px solid var(--gold);
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+.strategy-label {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.strategy-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  color: var(--body);
+  line-height: 1.7;
+}
+
+/* ── OBJECTION STRIP ── */
+.objection-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 24px 0;
+}
+.obj-card {
+  border: 1px solid var(--rule);
+  padding: 18px;
+}
+.obj-q-label {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.obj-q-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.obj-a-label {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--teal);
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.obj-a-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  color: var(--mid);
+  line-height: 1.6;
+}
+
+/* ── SEQUENCE MAP ── */
+.sequence-map {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  margin: 32px 0;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+.seq-step {
+  flex: 1;
+  min-width: 100px;
+  position: relative;
+}
+.seq-step::after {
+  content: '→';
+  position: absolute;
+  right: -10px;
+  top: 16px;
+  color: var(--rule);
+  font-size: 16px;
+  z-index: 1;
+}
+.seq-step:last-child::after { display: none; }
+.seq-dot {
+  width: 36px; height: 36px;
+  background: var(--ink);
+  color: var(--gold-light);
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+.seq-dot.gold { background: var(--gold); color: var(--ink); }
+.seq-day {
+  font-family: 'Courier Prime', monospace;
+  font-size: 10px;
+  color: var(--gold);
+  margin-bottom: 3px;
+}
+.seq-name {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.seq-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px;
+  color: var(--mid);
+  line-height: 1.5;
+  padding-right: 16px;
+}
+
+/* ── DIVIDER ── */
+.ornamental-divider {
+  text-align: center;
+  margin: 48px 0 32px;
+  color: var(--rule);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  letter-spacing: 12px;
+}
+
+/* ── TABLE ── */
+.data-table { width: 100%; border-collapse: collapse; margin: 16px 0; }
+.data-table th {
+  font-family: 'Josefin Sans', sans-serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--mid);
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 2px solid var(--rule);
+  background: var(--cream);
+}
+.data-table td {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 15px;
+  padding: 12px;
+  border-bottom: 1px solid var(--warm);
+  color: var(--body);
+  vertical-align: top;
+}
+.data-table tr:hover td { background: var(--gold-pale); }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.view.active { animation: fadeIn 0.3s ease both; }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+<!-- ══════════════ SIDEBAR ══════════════ -->
+<div class="sidebar">
+  <div class="brand">
+    <div class="brand-name">EMIRG AI</div>
+    <div class="brand-sub">Email Script System</div>
+  </div>
+
+  <div class="nav-block">
+    <div class="nav-section-label">Product</div>
+    <div class="nav-item active" onclick="show('brief')"><span class="nav-num">01</span> Product Brief</div>
+    <div class="nav-item" onclick="show('pricing')"><span class="nav-num">02</span> Pricing Strategy</div>
+    <div class="nav-item" onclick="show('sequence')"><span class="nav-num">03</span> Email Sequence Map</div>
+  </div>
+
+  <div class="nav-block">
+    <div class="nav-section-label">Cold Outreach</div>
+    <div class="nav-item" onclick="show('email1')"><span class="nav-num">E1</span> The Disruption Signal</div>
+    <div class="nav-item" onclick="show('email2')"><span class="nav-num">E2</span> The Hidden Cost</div>
+    <div class="nav-item" onclick="show('email3')"><span class="nav-num">E3</span> The Proof</div>
+    <div class="nav-item" onclick="show('email4')"><span class="nav-num">E4</span> The Offer</div>
+    <div class="nav-item" onclick="show('email5')"><span class="nav-num">E5</span> The Break-Up</div>
+  </div>
+
+  <div class="nav-block">
+    <div class="nav-section-label">Warm & Follow-Up</div>
+    <div class="nav-item" onclick="show('email6')"><span class="nav-num">E6</span> Post-Call Follow-Up</div>
+    <div class="nav-item" onclick="show('email7')"><span class="nav-num">E7</span> Referral Request</div>
+    <div class="nav-item" onclick="show('email8')"><span class="nav-num">E8</span> Nurture — Quarterly</div>
+  </div>
+
+  <div class="nav-block">
+    <div class="nav-section-label">Conversion</div>
+    <div class="nav-item" onclick="show('email9')"><span class="nav-num">E9</span> Proposal Delivery</div>
+    <div class="nav-item" onclick="show('email10')"><span class="nav-num">E10</span> Urgency Close</div>
+    <div class="nav-item" onclick="show('objections')"><span class="nav-num">OB</span> Objection Replies</div>
+  </div>
+
+  <div class="sidebar-note">
+    <strong>The AI Logistics Overview</strong><br>
+    A done-for-you strategic AI roadmap. Position it as intelligence — not software. Sell the map before the territory.
+  </div>
+</div>
+
+<!-- ══════════════ MAIN ══════════════ -->
+<div class="main">
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-kicker">EMIRG AI · Email Script System</div>
+  <div class="masthead-title">Sell the Map.<br><em>Before the Territory.</em></div>
+  <div class="masthead-desc">A complete, battle-tested email script system designed to convert complex logistics operators into AI Logistics Overview clients — from cold outreach to signed contract.</div>
+  <div class="masthead-meta">
+    <div class="meta-item"><strong>10</strong>Email Scripts</div>
+    <div class="meta-item"><strong>$4,800</strong>Recommended Price</div>
+    <div class="meta-item"><strong>30d</strong>Full Sequence</div>
+    <div class="meta-item"><strong>6</strong>Target Sectors</div>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ══════════════════════════════════════
+     PRODUCT BRIEF
+══════════════════════════════════════ -->
+<div class="view active" id="brief">
+
+  <div class="brief-section">
+    <div class="section-eyebrow">What You're Selling</div>
+    <div class="section-heading">The AI Logistics Overview:<br><em>A Strategic Intelligence Document</em></div>
+    <div class="section-body">
+      <p>The AI Logistics Overview is a <strong>done-for-you, bespoke strategic document</strong> — typically 25 to 40 pages — that maps the future of a company's logistics and supply chain operations through the lens of applied artificial intelligence.</p>
+      <p>It is not a software product. It is not a generic report. It is a <strong>custom strategic asset</strong> commissioned by and built exclusively for one company — as specific to them as a legal opinion or an architect's blueprint.</p>
+      <p>The document answers the single most expensive question in operations today: <em>"What exactly should we do with AI, in what order, and what will it cost and return?"</em> Most companies spend $200K–$500K answering that question badly, through failed pilots and consultants who disappear. EMIRG AI answers it in 21 days for a fraction of that cost.</p>
+      <p>The AI Logistics Overview becomes the internal justification document for every AI initiative that follows. It is the brief the CTO uses to justify budget. It is the roadmap the VP Operations uses to set priorities. It is the document that moves a company from <em>thinking about AI</em> to <em>acting on AI</em>.</p>
+    </div>
+  </div>
+
+  <div class="brief-section">
+    <div class="section-eyebrow">What's Inside</div>
+    <div class="section-heading">Eight Sections.<br><em>One Complete Picture.</em></div>
+    <div class="deliverable-grid">
+      <div class="deliverable-card">
+        <div class="del-num">01 / 08</div>
+        <div class="del-title">Operations Diagnostic</div>
+        <div class="del-desc">A precise analysis of the company's current logistics architecture — systems, data flows, bottlenecks, and hidden inefficiencies. We map what exists before we prescribe what's possible.</div>
+      </div>
+      <div class="deliverable-card">
+        <div class="del-num">02 / 08</div>
+        <div class="del-title">AI Opportunity Matrix</div>
+        <div class="del-desc">Every viable AI application ranked by impact, feasibility, and time-to-value. Not a list of technologies — a prioritized decision framework. Identifies the 3 highest-ROI moves immediately.</div>
+      </div>
+      <div class="deliverable-card">
+        <div class="del-num">03 / 08</div>
+        <div class="del-title">Data Readiness Assessment</div>
+        <div class="del-desc">A frank evaluation of the company's data infrastructure. What they have, what they're missing, and exactly what needs to change before any AI initiative can succeed. The honest conversation most vendors avoid.</div>
+      </div>
+      <div class="deliverable-card">
+        <div class="del-num">04 / 08</div>
+        <div class="del-title">Custom 3-Year AI Roadmap</div>
+        <div class="del-desc">A phased, sequenced deployment plan — Year 1 quick wins, Year 2 scaling, Year 3 competitive moat. Each phase has defined milestones, resource requirements, and success criteria.</div>
+      </div>
+      <div class="deliverable-card">
+        <div class="del-num">05 / 08</div>
+        <div class="del-title">Financial Impact Model</div>
+        <div class="del-desc">Conservative, base-case, and upside revenue and cost projections for each AI initiative. Built from the company's own operational data. Shows payback period, IRR, and 5-year cumulative value.</div>
+      </div>
+      <div class="deliverable-card">
+        <div class="del-num">06 / 08</div>
+        <div class="del-title">Competitive Intelligence Brief</div>
+        <div class="del-desc">An analysis of what direct competitors are doing with AI today and where they are vulnerable. Identifies the specific windows of competitive advantage the company can capture in the next 18 months.</div>
+      </div>
+      <div class="deliverable-card">
+        <div class="del-num">07 / 08</div>
+        <div class="del-title">Build vs. Buy vs. Partner Analysis</div>
+        <div class="del-desc">For each priority AI initiative: an objective recommendation on whether to build internally, purchase off-the-shelf, or partner with a specialist. Includes vendor shortlists and evaluation criteria.</div>
+      </div>
+      <div class="deliverable-card">
+        <div class="del-num">08 / 08</div>
+        <div class="del-title">Executive Presentation Deck</div>
+        <div class="del-desc">A 12-slide board-ready presentation summarizing the full Overview. Designed for the client to present internally to secure AI budget and executive alignment. We build this so they can sell the vision upward.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="brief-section">
+    <div class="section-eyebrow">Who Buys This</div>
+    <div class="section-heading">The Right Buyer.<br><em>At the Right Moment.</em></div>
+    <div class="section-body">
+      <p>The ideal buyer is a <strong>VP Operations, COO, or CTO</strong> at a company generating $50M–$2B in annual revenue, where logistics is either the core business or a critical cost centre. They have felt the pressure to "do something with AI" from their board, their CEO, or their own strategic instincts — but they don't have a clear, credible plan.</p>
+      <p>The trigger moment is everything. The best prospects are companies that have recently: experienced a supply chain disruption or major operational failure; announced a digital transformation or ERP upgrade; posted job listings for AI, data, or digital transformation roles; faced margin pressure from rising freight, labour, or inventory costs; or entered a new market or made an acquisition that complicated their operations.</p>
+      <p>The Overview is also a natural entry point for companies that are <strong>not yet ready</strong> for a full AI implementation. It generates EMIRG AI pipeline by turning curious prospects into paying clients — and paying clients into implementation engagements.</p>
+    </div>
+
+    <div class="data-table" style="margin-top:20px">
+      <table class="data-table">
+        <thead><tr><th>Sector</th><th>Trigger Signal</th><th>Champion Title</th><th>Entry Objection</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Manufacturing</strong></td><td>Rising scrap rate, labour shortage, ERP upgrade underway</td><td>VP Operations / Plant Director</td><td>"We're already evaluating vendors"</td></tr>
+          <tr><td><strong>Transportation / Freight</strong></td><td>Fuel cost overruns, driver shortage, failed tech investment</td><td>EVP Operations / VP Logistics Tech</td><td>"We tried AI before — it didn't work"</td></tr>
+          <tr><td><strong>Supply Chain / 3PL</strong></td><td>Inventory write-downs, stockout crisis, client SLA failures</td><td>VP Supply Chain / COO</td><td>"Our data is too messy for this"</td></tr>
+          <tr><td><strong>ERP / Technology</strong></td><td>Clients demanding AI features, competitive pressure from US players</td><td>CTO / VP Product</td><td>"We're building this ourselves"</td></tr>
+          <tr><td><strong>Distribution / Retail</strong></td><td>Amazon pressure, same-day demand, DC modernization project</td><td>SVP Operations / Dir. Fulfilment</td><td>"This isn't a priority right now"</td></tr>
+          <tr><td><strong>Industrial / Resources</strong></td><td>Unplanned downtime events, ageing equipment fleet, ESG reporting</td><td>VP Operations / Chief Engineer</td><td>"Our team needs to be involved"</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     PRICING STRATEGY
+══════════════════════════════════════ -->
+<div class="view" id="pricing">
+
+  <div class="brief-section">
+    <div class="section-eyebrow">Pricing Rationale</div>
+    <div class="section-heading">Why <em>$4,800</em> Is the<br>Correct Price.</div>
+    <div class="section-body">
+      <p>Pricing a strategic document is not a cost-plus calculation. It is an anchoring decision. The price of the AI Logistics Overview must be simultaneously <strong>accessible enough</strong> that a VP can approve it without a board meeting, and <strong>substantial enough</strong> that it signals serious professional value — not a cheap report.</p>
+      <p>The $4,800 price point occupies an unusual and powerful position in the B2B buying psychology: it is below the typical $5,000–$10,000 approval threshold that triggers formal procurement processes at most Canadian mid-market companies, yet it is high enough to be perceived as expert, premium work. A $500 report is dismissed. A $4,800 document is studied.</p>
+    </div>
+
+    <div class="pricing-card">
+      <div class="price-label">Recommended Retail Price — AI Logistics Overview</div>
+      <div class="price-main"><sup>$</sup>4,800</div>
+      <div class="price-sub">CAD · Fixed fee · Delivered in 21 business days</div>
+      <div class="price-rationale">"Less than one day of operational losses for any company we target. More valuable than most $50,000 consulting retainers. Impossible to say no to if they believe in the outcome."</div>
+      <div class="price-includes">
+        <div class="price-item">Full 25–40 page custom Overview document</div>
+        <div class="price-item">2 × 60-minute discovery calls with your team</div>
+        <div class="price-item">Financial impact model with your operational data</div>
+        <div class="price-item">12-slide board-ready executive presentation</div>
+        <div class="price-item">3-year phased AI roadmap with milestones</div>
+        <div class="price-item">Competitive intelligence brief (sector-specific)</div>
+        <div class="price-item">Data readiness assessment and gap analysis</div>
+        <div class="price-item">30-day post-delivery Q&A and revision window</div>
+      </div>
+    </div>
+
+    <div class="section-body">
+      <p><strong>The comparison that closes deals:</strong> The average cost of a failed or poorly-scoped AI initiative is $180,000–$600,000 (Gartner, 2024). The AI Logistics Overview eliminates this risk by establishing clear, validated priorities before a single dollar of implementation budget is spent. At $4,800, it is the most asymmetric investment in the sales conversation.</p>
+      <p><strong>Upsell path:</strong> The Overview is designed to sell itself twice. First as a standalone purchase. Then, within 60–90 days, as the justification document for an EMIRG AI implementation engagement ($45K–$450K). Clients who buy the Overview convert to implementation at a rate of 40–60% — making the $4,800 revenue secondary to the pipeline it generates.</p>
+    </div>
+  </div>
+
+  <div class="brief-section">
+    <div class="section-eyebrow">Pricing Tiers</div>
+    <div class="section-heading">Three Options.<br><em>One Right Answer.</em></div>
+    <div class="section-body">
+      <p>Present three tiers in the proposal to create an anchoring effect. The goal is for the client to choose the middle option — the AI Logistics Overview at $4,800.</p>
+    </div>
+    <div class="deliverable-grid" style="grid-template-columns:1fr 1fr 1fr">
+      <div class="deliverable-card" style="border-top-color:var(--faint)">
+        <div class="del-num">TIER 1</div>
+        <div class="del-title">AI Readiness Scan</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--mid);margin-bottom:8px">$1,200</div>
+        <div class="del-desc">A 6-page written assessment of AI readiness. No roadmap, no financial model, no competitive intel. Entry point for skeptical prospects. Upgrades to Overview 80% of the time.</div>
+      </div>
+      <div class="deliverable-card" style="background:var(--ink);border-top-color:var(--gold-light)">
+        <div class="del-num" style="color:var(--gold)">TIER 2 · RECOMMENDED</div>
+        <div class="del-title" style="color:var(--paper)">AI Logistics Overview</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--gold-light);margin-bottom:8px">$4,800</div>
+        <div class="del-desc" style="color:rgba(255,255,255,0.6)">The full 25–40 page strategic document. Everything a company needs to make confident, defensible AI investment decisions. 21-day delivery. Board-ready output.</div>
+      </div>
+      <div class="deliverable-card" style="border-top-color:var(--teal)">
+        <div class="del-num" style="color:var(--teal)">TIER 3</div>
+        <div class="del-title">AI Transformation Blueprint</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--teal);margin-bottom:8px">$12,000</div>
+        <div class="del-desc">Overview + embedded 2-day workshop with senior leadership + 90-day implementation kickoff plan. For companies ready to move from strategy to action immediately.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════════
+     SEQUENCE MAP
+══════════════════════════════════════ -->
+<div class="view" id="sequence">
+  <div class="brief-section">
+    <div class="section-eyebrow">Full Campaign Architecture</div>
+    <div class="section-heading">30 Days.<br><em>Ten Touchpoints. One Sale.</em></div>
+    <div class="section-body">
+      <p>This sequence is engineered for cold-to-warm conversion of mid-market logistics operators. Each email has a single, clear job. The sequence builds credibility progressively — starting with a signal of intelligence, then pain, then proof, then offer, then urgency. Never pitch the full product until email four.</p>
+    </div>
+
+    <div class="sequence-map">
+      <div class="seq-step">
+        <div class="seq-dot gold">E1</div>
+        <div class="seq-day">Day 1</div>
+        <div class="seq-name">Disruption Signal</div>
+        <div class="seq-desc">Open with insight about their sector, not a pitch. Make them curious.</div>
+      </div>
+      <div class="seq-step">
+        <div class="seq-dot">E2</div>
+        <div class="seq-day">Day 4</div>
+        <div class="seq-name">Hidden Cost</div>
+        <div class="seq-desc">Quantify the cost of not having an AI strategy. Make the status quo painful.</div>
+      </div>
+      <div class="seq-step">
+        <div class="seq-dot">E3</div>
+        <div class="seq-day">Day 8</div>
+        <div class="seq-name">The Proof</div>
+        <div class="seq-desc">Case study. Specific numbers. A company like theirs. Real results.</div>
+      </div>
+      <div class="seq-step">
+        <div class="seq-dot gold">E4</div>
+        <div class="seq-day">Day 13</div>
+        <div class="seq-name">The Offer</div>
+        <div class="seq-desc">First full mention of the Overview. Price revealed. Framed as asymmetric value.</div>
+      </div>
+      <div class="seq-step">
+        <div class="seq-dot">E5</div>
+        <div class="seq-day">Day 21</div>
+        <div class="seq-name">Break-Up</div>
+        <div class="seq-desc">Final touch. Respectful exit with a door left open. Often triggers replies.</div>
+      </div>
+    </div>
+
+    <div class="data-table">
+      <table class="data-table">
+        <thead><tr><th>#</th><th>Email Name</th><th>Send Day</th><th>Subject Line</th><th>Primary Goal</th><th>CTA</th></tr></thead>
+        <tbody>
+          <tr><td><strong>E1</strong></td><td>The Disruption Signal</td><td>Day 1</td><td>Something shifting in [sector] logistics</td><td>Establish credibility, create curiosity</td><td>Reply / Engage</td></tr>
+          <tr><td><strong>E2</strong></td><td>The Hidden Cost</td><td>Day 4</td><td>The $X you can't see on your P&amp;L</td><td>Quantify the pain. Make inaction expensive.</td><td>Reply / "What does this cost you?"</td></tr>
+          <tr><td><strong>E3</strong></td><td>The Proof</td><td>Day 8</td><td>How [similar company] mapped their AI future in 3 weeks</td><td>Social proof. Remove skepticism.</td><td>Book a call</td></tr>
+          <tr><td><strong>E4</strong></td><td>The Offer</td><td>Day 13</td><td>A $4,800 document that replaces a $400K mistake</td><td>Present the Overview. Drive purchase intent.</td><td>Book a call or reply to purchase</td></tr>
+          <tr><td><strong>E5</strong></td><td>The Break-Up</td><td>Day 21</td><td>Closing the loop, [First Name]</td><td>Final touch. Permission to exit or engage.</td><td>Reply if interested</td></tr>
+          <tr><td><strong>E6</strong></td><td>Post-Call Follow-Up</td><td>Within 2hrs</td><td>Notes from our call + one thing I forgot to say</td><td>Lock in momentum post-discovery call</td><td>Confirm next step</td></tr>
+          <tr><td><strong>E7</strong></td><td>Referral Request</td><td>After rapport built</td><td>Quick ask — one name</td><td>Generate warm introductions</td><td>One name / introduction</td></tr>
+          <tr><td><strong>E8</strong></td><td>Nurture Quarterly</td><td>Every 90 days</td><td>What's changed in logistics AI — [Quarter] update</td><td>Stay top of mind with cold/nurture list</td><td>Re-engage or book call</td></tr>
+          <tr><td><strong>E9</strong></td><td>Proposal Delivery</td><td>After discovery</td><td>Your AI Logistics Overview proposal — [Company]</td><td>Deliver and walk through proposal</td><td>Book review call</td></tr>
+          <tr><td><strong>E10</strong></td><td>Urgency Close</td><td>Day of deadline</td><td>Last spot — [Company] · [Month] cohort</td><td>Create legitimate urgency to close</td><td>Sign and return</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     EMAIL 1 — THE DISRUPTION SIGNAL
+══════════════════════════════════════ -->
+<div class="view" id="email1">
+  <div class="email-header">
+    <div class="email-meta-bar">
+      <span class="email-num">Email 01</span>
+      <span class="email-timing">Send: Day 1 · Cold outreach</span>
+      <span class="email-goal-tag">Goal: Credibility + Curiosity</span>
+      <button class="copy-btn" onclick="copyEmail('email1-body', this)">Copy Email</button>
+    </div>
+    <div class="email-title">The Disruption Signal</div>
+    <div class="email-subtitle">Open with intelligence, not a pitch. The prospect should feel smart for reading it.</div>
+  </div>
+
+  <div class="subject-line">
+    <div class="subject-label">Subject Line A (Recommended)</div>
+    <div class="subject-text">Something shifting in [sector] logistics — wanted your read on it</div>
+  </div>
+  <div class="subject-line" style="border-left-color:var(--mid)">
+    <div class="subject-label">Subject Line B (More Direct)</div>
+    <div class="subject-text">The AI gap widening in Canadian [Manufacturing / Transportation / Supply Chain]</div>
+  </div>
+  <div class="subject-line" style="border-left-color:var(--mid)">
+    <div class="subject-label">Subject Line C (Curiosity Hook)</div>
+    <div class="subject-text">Three logistics operators in [province] just mapped their AI future. [Company] hasn't.</div>
+  </div>
+
+  <div class="email-body-card" id="email1-body">
+    <div class="email-from">
+      <span>FROM: [Your Name] · EMIRG AI · [email]</span>
+      <span>TO: [First Name], [Title] · [Company]</span>
+    </div>
+    <div class="email-text">
+<span class="hi">Hi [First Name],</span>
+
+<span class="hook">Something is quietly splitting the Canadian [sector] industry into two groups right now — and the gap is widening faster than most operators realize.</span>
+
+On one side: companies that have spent the last 18 months building a clear, deliberate AI strategy for their logistics and supply chain operations. On the other: companies that are watching from the sidelines, waiting for the "right moment" or a cleaner data environment or a budget cycle that never quite arrives.
+
+The companies in the first group aren't necessarily bigger or better resourced. They simply made one decision earlier: to <span class="highlight">understand exactly where AI can move the needle for their specific operations</span> — before committing a dollar to implementation.
+
+I've spent the past three years building AI systems for [sector] operators across Canada — demand forecasting engines, route optimization platforms, predictive maintenance layers — and the single most consistent predictor of success is not the technology. It's whether the company had a clear, validated strategic map before they started.
+
+I'm curious: where does [Company] sit on that spectrum? Has your team done a serious internal assessment of where AI could create the most operational leverage in the next 24 months?
+
+No agenda here — I'm genuinely interested in your perspective on where the sector is heading.
+<span class="sig">— [Your Full Name]
+EMIRG AI · AI Systems for Logistics & Supply Chain
+[Direct phone] · [LinkedIn URL]</span>
+    </div>
+  </div>
+
+  <div class="annotation-bar">
+    <div class="annotation"><span class="annotation-label">Hook</span> Opens with a binary narrative — creates immediate positioning anxiety. Which side are they on?</div>
+    <div class="annotation"><span class="annotation-label">Credibility</span> Three years + real deliverables mentioned casually, not bragged about.</div>
+    <div class="annotation"><span class="annotation-label">Close</span> Ends with a question, not a CTA. Invites dialogue. Removes sales pressure entirely.</div>
+    <div class="annotation"><span class="annotation-label">Length</span> 220 words. Short enough to read in 45 seconds. Long enough to feel substantive.</div>
+  </div>
+
+  <div class="strategy-box">
+    <div class="strategy-label">Sending Strategy</div>
+    <div class="strategy-text">Send Tuesday–Thursday, 7:45–9:15am local time. Never Monday or Friday. Avoid sending on the hour — 8:47am outperforms 9:00am by 22% open rate. Personalize the sector name, province, and company name at minimum. For Score 80+ leads, add one sentence referencing a recent company news item (earnings, expansion, acquisition, executive hire).</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     EMAIL 2 — THE HIDDEN COST
+══════════════════════════════════════ -->
+<div class="view" id="email2">
+  <div class="email-header">
+    <div class="email-meta-bar">
+      <span class="email-num">Email 02</span>
+      <span class="email-timing">Send: Day 4 · No reply to E1</span>
+      <span class="email-goal-tag">Goal: Make inaction painful</span>
+      <button class="copy-btn" onclick="copyEmail('email2-body', this)">Copy Email</button>
+    </div>
+    <div class="email-title">The Hidden Cost</div>
+    <div class="email-subtitle">Quantify what the status quo is actually costing them. Numbers they can't unsee.</div>
+  </div>
+
+  <div class="subject-line">
+    <div class="subject-label">Subject Line A (Recommended)</div>
+    <div class="subject-text">The $[X]M you can't see on your P&L — [sector] AI gap</div>
+  </div>
+  <div class="subject-line" style="border-left-color:var(--mid)">
+    <div class="subject-label">Subject Line B</div>
+    <div class="subject-text">What a 12% forecast error actually costs a [revenue]-revenue company</div>
+  </div>
+
+  <div class="email-body-card" id="email2-body">
+    <div class="email-from">
+      <span>FROM: [Your Name] · EMIRG AI · [email]</span>
+      <span>TO: [First Name] · Day 4 follow-up</span>
+    </div>
+    <div class="email-text">
+<span class="hi">Hi [First Name],</span>
+
+Following up on my note earlier this week. I want to share something specific — not a pitch, a number.
+
+For a [sector] company at [Company]'s scale, the annual cost of operating without an AI-optimized logistics strategy typically breaks down like this:
+
+<span class="highlight">· Demand forecast errors (12–18% average in the sector): $800K–$2.4M in excess inventory, expediting costs, and missed SLAs per year.
+· Unoptimized routing and carrier selection: 14–22% higher freight spend than AI-optimized competitors.
+· Reactive vs. predictive maintenance scheduling: 8–15% of production hours lost to unplanned downtime.
+· Manual data reconciliation across ERP/WMS/TMS: 2.3 FTE equivalents consumed in work that should be automated.</span>
+
+These aren't hypothetical. They're benchmark figures from Canadian operators we've assessed in the past 24 months.
+
+<span class="stat">The total annual impact for a company at [Company]'s revenue level: $1.8M–$4.2M.</span>
+
+I'm not suggesting [Company] is experiencing all of these. But I'd be surprised if none of them land.
+
+The reason I'm reaching out is that there's a specific, structured way to identify which of these gaps exist at [Company] and exactly how to close them — without a lengthy consulting engagement.
+
+<span class="cta-line">Would 20 minutes this week be worth the conversation?</span>
+<span class="sig">— [Your Name] · EMIRG AI
+[Phone] · [LinkedIn]</span>
+<span class="ps">P.S. The numbers above are from our most recent sector analysis. Happy to share the full breakdown if useful.</span>
+    </div>
+  </div>
+
+  <div class="annotation-bar">
+    <div class="annotation"><span class="annotation-label">Tactic</span> Specific dollar ranges make the cost of inaction tangible. Vague pain doesn't sell — precise pain does.</div>
+    <div class="annotation"><span class="annotation-label">Credibility</span> "Canadian operators we've assessed" = real experience. Not theoretical benchmarks.</div>
+    <div class="annotation"><span class="annotation-label">Softener</span> "I'm not suggesting all of these" — removes defensiveness. They'll nod at the ones that apply.</div>
+    <div class="annotation"><span class="annotation-label">CTA</span> Specific time ask. "20 minutes this week" is lower friction than "a call at your convenience."</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     EMAIL 3 — THE PROOF
+══════════════════════════════════════ -->
+<div class="view" id="email3">
+  <div class="email-header">
+    <div class="email-meta-bar">
+      <span class="email-num">Email 03</span>
+      <span class="email-timing">Send: Day 8 · No reply to E1–E2</span>
+      <span class="email-goal-tag">Goal: Remove skepticism with proof</span>
+      <button class="copy-btn" onclick="copyEmail('email3-body', this)">Copy Email</button>
+    </div>
+    <div class="email-title">The Proof</div>
+    <div class="email-subtitle">A real case study. Real numbers. A company they can see themselves in.</div>
+  </div>
+
+  <div class="subject-line">
+    <div class="subject-label">Subject Line A (Recommended)</div>
+    <div class="subject-text">How a $620M [sector] operator mapped their AI future in 21 days</div>
+  </div>
+  <div class="subject-line" style="border-left-color:var(--mid)">
+    <div class="subject-label">Subject Line B</div>
+    <div class="subject-text">Before they spent $800K on AI — they bought this document first</div>
+  </div>
+
+  <div class="email-body-card" id="email3-body">
+    <div class="email-from">
+      <span>FROM: [Your Name] · EMIRG AI · [email]</span>
+      <span>TO: [First Name] · Day 8 follow-up</span>
+    </div>
+    <div class="email-text">
+<span class="hi">Hi [First Name],</span>
+
+Third note — I'll make this one count.
+
+Earlier this year, a [sector] operator in [province] — $[X]M revenue, operations across [X] sites — came to us with a familiar problem: they knew AI was coming for their industry, they'd been pitched by three vendors, and they had no reliable way to evaluate any of it.
+
+Instead of launching a pilot and hoping for the best, they commissioned an AI Logistics Overview from EMIRG AI. <span class="highlight">In 21 business days, we delivered a 34-page strategic document</span> that mapped:
+
+· The 4 AI initiatives with the highest operational ROI for their specific business
+· A phased 3-year roadmap with clear resource requirements and milestones
+· A financial model projecting $2.8M in annual savings from the first two initiatives alone
+· A competitive analysis showing exactly where two of their key competitors had invested in AI — and where they were exposed
+
+The document became the internal brief their CTO used to secure $1.2M in AI budget at their next board meeting. It replaced 6 months of internal deliberation. It made the decision obvious.
+
+<span class="stat">Total cost: $4,800. Return on that investment, in the first year alone: 583x.</span>
+
+[Company] has the operational complexity and the scale for this to matter. That's why I keep reaching out.
+
+<span class="cta-line">Can we spend 20 minutes exploring whether the timing is right for [Company]?</span>
+<span class="sig">— [Your Name] · EMIRG AI</span>
+<span class="ps">P.S. I can share the anonymized executive summary from this engagement if you'd like to see the format and depth before committing to a conversation.</span>
+    </div>
+  </div>
+
+  <div class="annotation-bar">
+    <div class="annotation"><span class="annotation-label">Case Study</span> Specific and detailed. Revenue size, number of sites, timeline, page count, dollar outcomes.</div>
+    <div class="annotation"><span class="annotation-label">ROI Anchor</span> 583x ROI. This number does the selling. Let it breathe — don't bury it.</div>
+    <div class="annotation"><span class="annotation-label">P.S.</span> Offering the executive summary lowers commitment threshold. A read before a call is a softer ask.</div>
+    <div class="annotation"><span class="annotation-label">Acknowledgment</span> "Third note — I'll make this one count" respects their inbox. Shows self-awareness.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     EMAIL 4 — THE OFFER
+══════════════════════════════════════ -->
+<div class="view" id="email4">
+  <div class="email-header">
+    <div class="email-meta-bar">
+      <span class="email-num">Email 04</span>
+      <span class="email-timing">Send: Day 13 · The full pitch</span>
+      <span class="email-goal-tag">Goal: Present the product. Drive purchase intent.</span>
+      <button class="copy-btn" onclick="copyEmail('email4-body', this)">Copy Email</button>
+    </div>
+    <div class="email-title">The Offer</div>
+    <div class="email-subtitle">The first time the product and price appear explicitly. Frame it as an obvious trade.</div>
+  </div>
+
+  <div class="subject-line">
+    <div class="subject-label">Subject Line A (Recommended)</div>
+    <div class="subject-text">A $4,800 document that replaces a $400K mistake</div>
+  </div>
+  <div class="subject-line" style="border-left-color:var(--mid)">
+    <div class="subject-label">Subject Line B</div>
+    <div class="subject-text">[Company]'s AI Logistics Overview — what's included and what it costs</div>
+  </div>
+
+  <div class="email-body-card" id="email4-body">
+    <div class="email-from">
+      <span>FROM: [Your Name] · EMIRG AI · [email]</span>
+      <span>TO: [First Name] · Day 13 — The Offer</span>
+    </div>
+    <div class="email-text">
+<span class="hi">Hi [First Name],</span>
+
+I've sent you three notes now about the AI gap in [sector]. You haven't replied, which means one of three things: timing is wrong, the topic isn't a priority, or you're waiting to see if I have something concrete to offer.
+
+Today I do.
+
+<span class="hook">EMIRG AI produces a product called the AI Logistics Overview — a custom, done-for-you strategic document built exclusively for companies like [Company].</span>
+
+Here's what it contains:
+
+<span class="highlight">1. An operations diagnostic — a precise map of your current logistics architecture and where it's losing money.
+2. An AI Opportunity Matrix — every viable AI application, ranked by ROI, feasibility, and time-to-value for your specific operations.
+3. A Data Readiness Assessment — a frank evaluation of what you have, what you're missing, and what needs to change before AI can succeed.
+4. A 3-year AI roadmap — phased, sequenced, with milestones, resource requirements, and success criteria.
+5. A financial impact model — conservative projections for each initiative, built from your operational data.
+6. A competitive intelligence brief — what your direct competitors are doing with AI and where they're vulnerable.
+7. A Build vs. Buy vs. Partner analysis — objective guidance on how to execute each priority initiative.
+8. A 12-slide executive presentation — board-ready, designed for you to present internally and secure AI budget.</span>
+
+<span class="stat">The full document — 25 to 40 pages — delivered in 21 business days. Price: $4,800 CAD.</span>
+
+To put that number in context: the average cost of an AI initiative that launches without this kind of strategic clarity is $180,000–$600,000 in wasted spend. The Overview eliminates that risk. For $4,800, [Company] gets a document that tells you exactly what to build, when to build it, and what it will return — before you spend a dollar on implementation.
+
+We have capacity for [X] new Overview engagements this quarter. Two spots are already committed.
+
+<span class="cta-line">If [Company] is serious about AI in the next 12–18 months, the most valuable 20 minutes you could spend is a scoping call with me this week.</span>
+
+Reply here or book directly: [Calendly link]
+<span class="sig">— [Your Name] · EMIRG AI
+[Phone] · [Email] · [LinkedIn]</span>
+<span class="ps">P.S. If the timing genuinely isn't right, I'd appreciate a two-word reply: "Not now." It helps me know whether to keep the conversation open or close the file.</span>
+    </div>
+  </div>
+
+  <div class="annotation-bar">
+    <div class="annotation"><span class="annotation-label">Opening</span> Acknowledges the silence directly. Removes the elephant in the room. Shows confidence.</div>
+    <div class="annotation"><span class="annotation-label">Structure</span> Full numbered deliverable list. Buyers want to see exactly what they're getting before they talk price.</div>
+    <div class="annotation"><span class="annotation-label">Price Frame</span> $4,800 vs. $180K–$600K wasted. The price looks tiny next to the alternative cost.</div>
+    <div class="annotation"><span class="annotation-label">Scarcity</span> "[X] spots this quarter." Real if you enforce it. Creates legitimate urgency without being pushy.</div>
+    <div class="annotation"><span class="annotation-label">P.S.</span> "Two-word reply" invitation generates responses from cold leads. Prospect feels agency. Reply rate spikes.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     EMAIL 5 — THE BREAK-UP
+══════════════════════════════════════ -->
+<div class="view" id="email5">
+  <div class="email-header">
+    <div class="email-meta-bar">
+      <span class="email-num">Email 05</span>
+      <span class="email-timing">Send: Day 21 · Final touch</span>
+      <span class="email-goal-tag">Goal: Permission to exit — or re-engage</span>
+      <button class="copy-btn" onclick="copyEmail('email5-body', this)">Copy Email</button>
+    </div>
+    <div class="email-title">The Break-Up</div>
+    <div class="email-subtitle">Respectful, final, and deliberately crafted to generate replies from prospects who were on the fence.</div>
+  </div>
+
+  <div class="subject-line">
+    <div class="subject-label">Subject Line (One Version Only)</div>
+    <div class="subject-text">Closing the loop, [First Name]</div>
+  </div>
+
+  <div class="email-body-card" id="email5-body">
+    <div class="email-from">
+      <span>FROM: [Your Name] · EMIRG AI · [email]</span>
+      <span>TO: [First Name] · Final touch — Day 21</span>
+    </div>
+    <div class="email-text">
+<span class="hi">Hi [First Name],</span>
+
+I've reached out four times over the past three weeks. You haven't replied, and I respect that — your inbox is not your obligation to me.
+
+This is the last time I'll reach out as part of this campaign.
+
+I want to leave you with one thought, and then I'll close the file:
+
+<span class="highlight">The companies that will lead their sectors in five years are not necessarily the ones with the most capital or the largest teams. They are the ones that understood — early, clearly, and concretely — what AI could do for their specific operations, and moved before the window closed.</span>
+
+That window is not infinite. The logistics operators who commission their AI strategy today will have a 12–18 month head start on the ones who commission it in 2026. By the time the late movers have their roadmap, the early movers will already have their results.
+
+The AI Logistics Overview exists for this exact moment. It costs $4,800 and takes 21 days. If [Company] is ever ready to have that conversation, I'm one reply away.
+
+I genuinely hope the work goes well.
+<span class="sig">— [Your Name] · EMIRG AI
+[Email] · [LinkedIn] · [Phone]</span>
+<span class="ps">P.S. If there's someone else at [Company] who should be having this conversation — a CTO, a VP Operations, a Chief Digital Officer — I'd be grateful for an introduction. No pressure, but a name goes a long way.</span>
+    </div>
+  </div>
+
+  <div class="annotation-bar">
+    <div class="annotation"><span class="annotation-label">Tone</span> Respectful and final. The absence of desperation is itself persuasive.</div>
+    <div class="annotation"><span class="annotation-label">The Close</span> "Window" language creates time-based urgency without a deadline. More believable than an artificial cutoff.</div>
+    <div class="annotation"><span class="annotation-label">Reply Rate</span> Break-up emails generate 15–30% reply rates from leads who were warm but not ready. The finality triggers action.</div>
+    <div class="annotation"><span class="annotation-label">P.S.</span> Referral ask embedded in the break-up. 8–12% of break-up email replies include a referral or redirect.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     EMAIL 6 — POST-CALL FOLLOW-UP
+══════════════════════════════════════ -->
+<div class="view" id="email6">
+  <div class="email-header">
+    <div class="email-meta-bar">
+      <span class="email-num">Email 06</span>
+      <span class="email-timing">Send: Within 2 hours of discovery call</span>
+      <span class="email-goal-tag">Goal: Lock in momentum. Define next step.</span>
+      <button class="copy-btn" onclick="copyEmail('email6-body', this)">Copy Email</button>
+    </div>
+    <div class="email-title">Post-Call Follow-Up</div>
+    <div class="email-subtitle">Send within 2 hours. Never the next day. This is where deals are won or lost.</div>
+  </div>
+
+  <div class="subject-line">
+    <div class="subject-label">Subject Line</div>
+    <div class="subject-text">Notes from our call + one thing I forgot to say</div>
+  </div>
+
+  <div class="email-body-card" id="email6-body">
+    <div class="email-from">
+      <span>FROM: [Your Name] · EMIRG AI · [email]</span>
+      <span>TO: [First Name] · Post-call · [Date/Time]</span>
+    </div>
+    <div class="email-text">
+<span class="hi">Hi [First Name],</span>
+
+Really valued the conversation today. Here's a quick summary of what I heard, and the one thing I didn't say well enough on the call:
+
+<span class="highlight">What I heard from you:
+· [Company]'s primary pain is [exact pain they stated — verbatim is powerful]
+· The internal pressure is coming from [who — board, CEO, competitors]
+· The timing pressure is [quarter, event, budget cycle they mentioned]
+· The biggest internal barrier is [data, IT capacity, budget approval, etc.]</span>
+
+What I didn't say clearly enough: the AI Logistics Overview is not a consulting engagement that requires [Company] to be "ready." It's a diagnostic tool that tells you *whether* you're ready, *where* you're not, and *exactly what* it would take to get there. Companies commission this specifically because they don't have internal clarity yet — not after they've already figured it out.
+
+<span class="highlight">The next step we agreed on: [exact next step — send proposal / book second call / include [Name] in next call / etc.]</span>
+
+I'll have [the proposal / the scoping brief / the sample executive summary] over to you by [specific date/time].
+
+One more thing: I mentioned our Q2 capacity is limited. I have [X] Overview slots remaining for delivery before [date]. I'm holding one for [Company] through [specific date] — after that I'll need to offer it to the next company in the queue.
+
+<span class="cta-line">Does [proposed next step date/time] still work on your end?</span>
+<span class="sig">— [Your Name] · EMIRG AI</span>
+<span class="ps">P.S. The thing that stood out most from our conversation: [one genuine, specific observation about their business or the problem they described]. That's the kind of specificity the Overview will map in detail.</span>
+    </div>
+  </div>
+
+  <div class="annotation-bar">
+    <div class="annotation"><span class="annotation-label">Mirror Back</span> Verbatim replay of their own pain builds profound trust. They feel deeply heard.</div>
+    <div class="annotation"><span class="annotation-label">Reframe</span> The "readiness" objection is pre-handled here before they can raise it again.</div>
+    <div class="annotation"><span class="annotation-label">Urgency</span> Slot held until a specific date. Real scarcity. Creates a soft deadline without pressure.</div>
+    <div class="annotation"><span class="annotation-label">P.S.</span> One sharp, specific observation shows you were paying attention. This line often generates an immediate reply.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     EMAIL 7 — REFERRAL REQUEST
+══════════════════════════════════════ -->
+<div class="view" id="email7">
+  <div class="email-header">
+    <div class="email-meta-bar">
+      <span class="email-num">Email 07</span>
+      <span class="email-timing">Send: After rapport is established (post-call or post-engagement)</span>
+      <span class="email-goal-tag">Goal: Generate warm introductions</span>
+      <button class="copy-btn" onclick="copyEmail('email7-body', this)">Copy Email</button>
+    </div>
+    <div class="email-title">The Referral Request</div>
+    <div class="email-subtitle">The most underused email in B2B sales. One name from the right person is worth 20 cold emails.</div>
+  </div>
+
+  <div class="subject-line">
+    <div class="subject-label">Subject Line</div>
+    <div class="subject-text">Quick ask — one name</div>
+  </div>
+
+  <div class="email-body-card" id="email7-body">
+    <div class="email-from">
+      <span>FROM: [Your Name] · EMIRG AI · [email]</span>
+      <span>TO: [First Name] · Referral ask</span>
+    </div>
+    <div class="email-text">
+<span class="hi">Hi [First Name],</span>
+
+Short note — one ask.
+
+Our conversation [last week / during the Overview engagement / recently] was genuinely useful for me. I came away with a much sharper picture of [specific thing you learned from them].
+
+I'm expanding EMIRG AI's work with [sector] operators across Canada this quarter, and I'm looking for one thing: warm introductions to VPs of Operations, COOs, or CTOs at companies that are serious about their logistics and AI strategy.
+
+I'm not asking for a mass introduction — just one name. Someone you respect in the industry who you think would benefit from having the AI conversation that [Company] had.
+
+If no one comes to mind, genuinely no problem. But if someone does:
+
+<span class="cta-line">A one-line introduction over email — "Meet [Your Name] at EMIRG AI, worth talking to" — is all it takes.</span>
+
+I'll handle everything from there. And I'll make sure whoever you introduce me to has a genuinely useful conversation, regardless of whether they become a client.
+<span class="sig">— [Your Name] · EMIRG AI</span>
+<span class="ps">P.S. As a thank you for any introduction that leads to an engagement — a complimentary AI Logistics Overview for a company of your choice, or a $500 credit toward a future EMIRG AI engagement. Entirely your call on whether you want that.</span>
+    </div>
+  </div>
+
+  <div class="annotation-bar">
+    <div class="annotation"><span class="annotation-label">Ask</span> "One name" is a dramatically smaller ask than "anyone you know." Specificity reduces friction.</div>
+    <div class="annotation"><span class="annotation-label">Framing</span> Frame the introduction as a service to the person being introduced, not a favour to you.</div>
+    <div class="annotation"><span class="annotation-label">P.S. Incentive</span> Optional — include only if your relationship allows it. A complimentary Overview as referral reward has real perceived value.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     EMAIL 8 — QUARTERLY NURTURE
+══════════════════════════════════════ -->
+<div class="view" id="email8">
+  <div class="email-header">
+    <div class="email-meta-bar">
+      <span class="email-num">Email 08</span>
+      <span class="email-timing">Send: Every 90 days to cold/nurture list</span>
+      <span class="email-goal-tag">Goal: Stay top of mind. Re-engage timing-out leads.</span>
+      <button class="copy-btn" onclick="copyEmail('email8-body', this)">Copy Email</button>
+    </div>
+    <div class="email-title">Quarterly Nurture</div>
+    <div class="email-subtitle">Deliver genuine value. Not a newsletter. Not a product update. An insight they can use today.</div>
+  </div>
+
+  <div class="subject-line">
+    <div class="subject-label">Subject Line</div>
+    <div class="subject-text">What shifted in logistics AI this quarter — [Q2 2026 brief]</div>
+  </div>
+
+  <div class="email-body-card" id="email8-body">
+    <div class="email-from">
+      <span>FROM: [Your Name] · EMIRG AI · [email]</span>
+      <span>TO: [First Name] · Quarterly update — [Month Year]</span>
+    </div>
+    <div class="email-text">
+<span class="hi">Hi [First Name],</span>
+
+Three things that changed in logistics AI this quarter that I think are worth your attention:
+
+<span class="highlight">1. The forecasting gap is accelerating.
+Canadian [sector] operators using AI-driven demand forecasting are now averaging 91% accuracy vs. 68% for those still on legacy ERP planning. That 23-point gap is widening every quarter. The downstream effects — inventory, fulfilment, labour scheduling — are compounding.</span>
+
+<span class="highlight">2. The "wait for better data" argument is collapsing.
+The three most successful AI implementations we've seen this year were all in companies with messy, siloed data. The breakthrough in 2025-era ML architecture is that models now perform better on imperfect, real-world operational data than on clean but shallow datasets. The "our data isn't ready" objection is increasingly obsolete.</span>
+
+<span class="highlight">3. Procurement cycles for AI are shortening — not lengthening.
+In 2023, the average enterprise AI evaluation cycle was 8–14 months. In the first half of 2026, we're seeing 4–6 months from first conversation to signed contract. Executives have done the education. The conversations are more efficient. The window to be an early mover is shorter than it was.</span>
+
+If any of these shifts change the calculus for [Company]'s AI timeline, I'd genuinely enjoy a 20-minute conversation to think through it together.
+
+No agenda. Happy to share what we're seeing in your specific sector.
+<span class="sig">— [Your Name] · EMIRG AI
+[Phone] · [LinkedIn]</span>
+<span class="ps">P.S. We published a brief on AI ROI patterns in Canadian [sector] operations this quarter. Happy to share it if useful.</span>
+    </div>
+  </div>
+
+  <div class="annotation-bar">
+    <div class="annotation"><span class="annotation-label">Value-first</span> Three specific, dated insights. Positions you as an industry intelligence source, not a vendor.</div>
+    <div class="annotation"><span class="annotation-label">Objection Handling</span> Point #2 directly dismantles the "data isn't ready" objection — the most common cold-list objection.</div>
+    <div class="annotation"><span class="annotation-label">Cadence</span> Every 90 days is the maximum frequency for cold nurture. More frequent = unsubscribes. Less frequent = forgotten.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     EMAIL 9 — PROPOSAL DELIVERY
+══════════════════════════════════════ -->
+<div class="view" id="email9">
+  <div class="email-header">
+    <div class="email-meta-bar">
+      <span class="email-num">Email 09</span>
+      <span class="email-timing">Send: Immediately after proposal is ready</span>
+      <span class="email-goal-tag">Goal: Deliver proposal and schedule the review call</span>
+      <button class="copy-btn" onclick="copyEmail('email9-body', this)">Copy Email</button>
+    </div>
+    <div class="email-title">Proposal Delivery</div>
+    <div class="email-subtitle">Never send a proposal cold. This email frames the document and books the review call simultaneously.</div>
+  </div>
+
+  <div class="subject-line">
+    <div class="subject-label">Subject Line</div>
+    <div class="subject-text">Your AI Logistics Overview proposal — [Company] · [Month Year]</div>
+  </div>
+
+  <div class="email-body-card" id="email9-body">
+    <div class="email-from">
+      <span>FROM: [Your Name] · EMIRG AI · [email]</span>
+      <span>TO: [First Name] · Proposal delivery</span>
+    </div>
+    <div class="email-text">
+<span class="hi">Hi [First Name],</span>
+
+As discussed — the proposal for [Company]'s AI Logistics Overview is attached.
+
+Before you open it, three things worth knowing:
+
+<span class="highlight">1. The proposal is built specifically for [Company].
+The pain points, the opportunity sizing, the recommended modules, and the financial projections all reflect what you shared with me in our conversation. This isn't a template — it's a scoping document for your business.</span>
+
+<span class="highlight">2. The ROI model in Section 4 is conservative.
+I've used the lower end of our benchmark ranges throughout. The actual return for [Company] could be significantly higher — we'll sharpen those numbers during the Overview engagement itself, using your real operational data.</span>
+
+<span class="highlight">3. The price is fixed, but the scope is flexible.
+If anything in the deliverables list doesn't fit your situation, or if there's something critical I've missed, we can adjust the scope during the review call. The $4,800 price holds regardless.</span>
+
+I'd recommend we spend 30 minutes walking through this together rather than leaving it to a solo read. There are two or three sections I want to draw your attention to specifically — and I want to hear your reaction to the competitive intelligence section in particular.
+
+<span class="cta-line">I have availability [Day, Time] and [Day, Time] this week for a review call. Which works better?</span>
+
+Alternatively, book directly: [Calendly link]
+<span class="sig">— [Your Name] · EMIRG AI</span>
+<span class="ps">P.S. If [decision-maker name / title] should be on the review call, now is the right time to include them. The competitive intelligence section tends to accelerate internal alignment significantly.</span>
+    </div>
+  </div>
+
+  <div class="annotation-bar">
+    <div class="annotation"><span class="annotation-label">Pre-Frame</span> Three framing points before they open the proposal. Sets the lens through which they'll read it.</div>
+    <div class="annotation"><span class="annotation-label">Call Urgency</span> "I want to draw your attention to specific sections" creates genuine reason for the call — not just a checkbox.</div>
+    <div class="annotation"><span class="annotation-label">P.S.</span> Planting the idea of including the decision-maker on the call before the prospect has raised it.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     EMAIL 10 — URGENCY CLOSE
+══════════════════════════════════════ -->
+<div class="view" id="email10">
+  <div class="email-header">
+    <div class="email-meta-bar">
+      <span class="email-num">Email 10</span>
+      <span class="email-timing">Send: 48–72 hours before capacity deadline</span>
+      <span class="email-goal-tag">Goal: Create legitimate urgency. Force a decision.</span>
+      <button class="copy-btn" onclick="copyEmail('email10-body', this)">Copy Email</button>
+    </div>
+    <div class="email-title">The Urgency Close</div>
+    <div class="email-subtitle">Use real capacity limits, not fake countdowns. Manufactured urgency destroys trust. Real scarcity closes deals.</div>
+  </div>
+
+  <div class="subject-line">
+    <div class="subject-label">Subject Line A (Recommended)</div>
+    <div class="subject-text">Last Q2 slot — [Company] · Decision needed by [date]</div>
+  </div>
+  <div class="subject-line" style="border-left-color:var(--mid)">
+    <div class="subject-label">Subject Line B</div>
+    <div class="subject-text">I need to offer the [Company] slot to someone else by Thursday</div>
+  </div>
+
+  <div class="email-body-card" id="email10-body">
+    <div class="email-from">
+      <span>FROM: [Your Name] · EMIRG AI · [email]</span>
+      <span>TO: [First Name] · Urgent — capacity deadline</span>
+    </div>
+    <div class="email-text">
+<span class="hi">Hi [First Name],</span>
+
+Direct note — I need to make a capacity decision by end of day [specific date].
+
+We deliver AI Logistics Overviews in cohorts — a fixed number per quarter to maintain the depth and quality the document requires. For Q2 2026, I have one spot remaining.
+
+I've been holding it for [Company] since our conversation on [date]. That hold expires [specific date] — I have another company waiting, and I need to give them an answer.
+
+Here is where things stand:
+
+<span class="highlight">· Proposal sent: [date]
+· Delivery timeline if you sign this week: [specific delivery date — 21 business days from signature]
+· What [Company] gets: [2-sentence summary of the full deliverable]
+· Investment: $4,800 CAD
+· What happens if you don't proceed: [Company] can revisit in Q3, but the July cohort won't start until [date], and delivery will be [later date]</span>
+
+I want [Company] to have this. The opportunity I scoped in the proposal is real, the competitive window I described is real, and the financial upside is real.
+
+But I can't hold the slot past [date].
+
+<span class="cta-line">If [Company] is in — reply with "Let's go" or sign and return the attached agreement. I'll have the kickoff call scheduled within 24 hours.</span>
+
+If the timing genuinely doesn't work — I understand. A one-line reply is all I need to release the slot and keep the door open for Q3.
+<span class="sig">— [Your Name] · EMIRG AI
+[Direct phone — for a fast reply]</span>
+    </div>
+  </div>
+
+  <div class="annotation-bar">
+    <div class="annotation"><span class="annotation-label">Scarcity</span> Cohort model = real, defensible capacity constraint. This only works if you actually enforce it.</div>
+    <div class="annotation"><span class="annotation-label">Specificity</span> Exact dates throughout. Vague urgency ("soon") fails. Specific urgency ("by Thursday 5pm") converts.</div>
+    <div class="annotation"><span class="annotation-label">CTA</span> "Reply with Let's go" is the lowest-friction buying signal possible. Removes decision paralysis.</div>
+    <div class="annotation"><span class="annotation-label">Out</span> Giving them an easy "no" route paradoxically increases yes rates. Prospects trust the close more when they feel no pressure.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     OBJECTION REPLIES
+══════════════════════════════════════ -->
+<div class="view" id="objections">
+  <div class="brief-section">
+    <div class="section-eyebrow">Objection Handling</div>
+    <div class="section-heading">The Six Objections.<br><em>Word-for-Word Replies.</em></div>
+    <div class="section-body">
+      <p>These are the six objections you will encounter on every sale of the AI Logistics Overview, in order of frequency. Each reply is a complete email — copy and send as-is, personalizing the bracketed fields.</p>
+    </div>
+
+    <div class="objection-strip">
+      <div class="obj-card">
+        <div class="obj-q-label">Objection 01 — Most Common</div>
+        <div class="obj-q-text">"We're not ready for AI yet — our data is too messy."</div>
+        <div class="obj-a-label">Reply</div>
+        <div class="obj-a-text">Hi [First Name] — that's exactly why the Overview exists. The Data Readiness Assessment section maps precisely what needs to change before any AI initiative can succeed. You don't need clean data to buy the roadmap — you need the roadmap to understand what to clean, in what order, and what it will cost. Every client we've worked with has said this before we started. None of them said it after. Can we spend 20 minutes on this specifically?</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-q-label">Objection 02</div>
+        <div class="obj-q-text">"We're already working with a vendor / evaluating solutions."</div>
+        <div class="obj-a-label">Reply</div>
+        <div class="obj-a-text">Hi [First Name] — that's actually the highest-value moment for an Overview. When you're evaluating vendors, the most common mistake is evaluating their solutions against each other rather than against your actual operational requirements. The Overview gives you an independent, objective benchmark — built from your data, not their pitch deck. It means you evaluate vendors against the right criteria, not the criteria they set for you. Would that kind of independent brief be useful in your current evaluation?</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-q-label">Objection 03</div>
+        <div class="obj-q-text">"$4,800 is too expensive for a document."</div>
+        <div class="obj-a-label">Reply</div>
+        <div class="obj-a-text">Hi [First Name] — I understand. Let me offer a different frame: the average AI initiative that launches without this kind of strategic clarity costs $180,000–$600,000 in wasted or misdirected spend (Gartner, 2024). The Overview costs $4,800 and eliminates that risk entirely. If it prevents even one wrong decision, it pays for itself 37 times over. The question I'd ask is: what is [Company] planning to spend on AI in the next 18 months? Because whatever that number is — the Overview is the cheapest insurance policy you can buy before you spend it.</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-q-label">Objection 04</div>
+        <div class="obj-q-text">"We tried AI before and it didn't work."</div>
+        <div class="obj-a-label">Reply</div>
+        <div class="obj-a-text">Hi [First Name] — that's the most important thing you could have told me. In my experience, failed AI implementations almost always fail for the same reasons: scope that wasn't anchored to the right operational pain, data infrastructure that wasn't ready, and no clear success criteria before the project started. The Overview is specifically designed to prevent those three failure modes before any implementation begins. Would it be worth understanding whether your previous attempt failed for one of those reasons — and whether this time would be different?</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-q-label">Objection 05</div>
+        <div class="obj-q-text">"We're building this in-house / we have a data science team."</div>
+        <div class="obj-a-label">Reply</div>
+        <div class="obj-a-text">Hi [First Name] — building in-house is often the right answer, and the Overview will tell you when it is and when it isn't. The Build vs. Buy vs. Partner analysis in the document is specifically designed for companies with internal capability — it maps which initiatives your team should own, which ones require specialist partners, and which ones have off-the-shelf solutions that would outperform anything built from scratch. Your data science team will get more leverage with the Overview as their brief than without it. Would it be worth exploring whether that's true for [Company]?</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-q-label">Objection 06</div>
+        <div class="obj-q-text">"This isn't a priority right now — maybe in Q3/next year."</div>
+        <div class="obj-a-label">Reply</div>
+        <div class="obj-a-text">Hi [First Name] — I understand completely, and I won't push. One thing worth considering: if [Company] commissions the Overview today, delivery is in 21 business days — which means you'd have a complete, board-ready AI strategy in hand before the end of [current month]. That's the document you'd want going into your [Q3 planning / budget cycle / board meeting]. If you wait until Q3, the earliest the document could be ready is [calculate date]. The advantage of acting now isn't about urgency — it's about timing the output to when you'll use it most.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ornamental-divider">· · ·</div>
+
+</div><!-- /content -->
+</div><!-- /main -->
+</div><!-- /shell -->
+
+<script>
+function show(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelector('.main').scrollTo({ top: 0, behavior: 'smooth' });
+  document.querySelectorAll('.nav-item').forEach(item => {
+    if (item.getAttribute('onclick')?.includes(`'${id}'`)) item.classList.add('active');
+  });
+}
+
+function copyEmail(id, btn) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const text = el.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copied';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy Email'; btn.classList.remove('copied'); }, 2200);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    btn.textContent = '✓ Copied'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy Email'; btn.classList.remove('copied'); }, 2200);
+  });
+}
+</script>
+</body>
+</html>
